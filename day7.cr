@@ -22,8 +22,8 @@ def walk(contained, current, seen = Set(String).new)
 end
 
 def walk2(counts, current) : Int32
-  1 + counts[current].sum { |color, count| count * walk2(counts, color) }
+  counts[current].sum { |color, count| count * (walk2(counts, color) + 1) }
 end
 
 puts "part1: %s" % walk(contained_in, "shiny gold")
-puts "part2: %s" % (walk2(contain_counts, "shiny gold") - 1)
+puts "part2: %s" % walk2(contain_counts, "shiny gold")
