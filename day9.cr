@@ -1,4 +1,4 @@
-inputs =
+inputs = # Warning: assumes input that is > 0.
   File.read("input.day9")
     .split
     .map(&.to_i64)
@@ -10,12 +10,8 @@ def is_sum?(nums, needle)
 end
 
 def finder(inputs)
-  queue = Deque(Int64).new
-  inputs.each do |i|
-    if queue.size > 25
-      is_sum?(queue, i) ? queue.shift : return i
-    end
-    queue.push i
+  inputs.each_cons(26, reuse: Deque(Int64).new) do |is|
+    return is.last unless is_sum?(is, is.last)
   end
   raise "Unreachable"
 end
